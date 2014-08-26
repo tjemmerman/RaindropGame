@@ -33,6 +33,7 @@ class Drop {
       onScreen = false;
 //      println(this + " bottom"); 
       return true;
+      
     } else {
       return false;
     }
@@ -46,7 +47,6 @@ class Drop {
     for (int i = 2; i < r; i++ ) {
       ellipse(x,y + i*4,i*2,i*2);
     }
-    reachedBottom();
   }
 
   // If the drop is caught

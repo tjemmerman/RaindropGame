@@ -17,7 +17,6 @@ class PowerUp {
     fill(255,255,0);
     noStroke();
     ellipse(x,y,40,40);
-    reachedBottom();
   }
  
    boolean reachedBottom() {
@@ -34,7 +33,7 @@ class PowerUp {
   
  void caught(Catcher catcher)
  {
-  catcher.setR(catcher.getR()+5);
+  catcher.r+=5;
   speed = 0; 
   y = - 1000;
  }

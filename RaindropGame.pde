@@ -5,6 +5,9 @@ int totalDrops = 0;
 Timer powerUpTimer;
 PowerUp[] powerUps;
 int totalPowerUps = 0;
+Player player;
+PFont labelFont;
+color labelColor;
 
 void setup() {
   size(1000,400);
@@ -16,6 +19,9 @@ void setup() {
   powerUps = new PowerUp[1000]; 
   powerUpTimer = new Timer(3000);
   powerUpTimer.start();
+  player = new Player();
+  labelFont = createFont("Helvetica", 30, true);
+  labelColor = color(0,85);
 }
 
 void draw() {
@@ -25,11 +31,15 @@ void draw() {
 
   catcher.display(); 
   
+  textFont(labelFont);
+  fill(labelColor);
+  text(player.lives,10,30);
+  text(player.score,10,60);
+  
     if (powerUpTimer.isFinished()) 
   {
     if (int(random(3)) == 0)
     {
-      println("chundrabindu");
       powerUps[totalPowerUps] = new PowerUp();
       totalPowerUps++;
     }
@@ -42,6 +52,7 @@ void draw() {
   for (int i = 0; i < totalPowerUps; i++) {
     powerUps[i].move();
     powerUps[i].display();
+    powerUps[i].reachedBottom();
    if (catcher.intersectPowerUp(powerUps[i])) {
      powerUps[i].caught(catcher);
    }
@@ -62,8 +73,12 @@ void draw() {
   for (int i = 0; i < totalDrops; i++ ) {
     drops[i].move();
     drops[i].display();
+    if (drops[i].reachedBottom()) {
+      player.lives--;
+    }
     if (catcher.intersectDrop(drops[i])) {
       drops[i].caught();
+      player.score++;
     }
   }
 }

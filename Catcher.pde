@@ -27,14 +27,6 @@ class Catcher {
     ellipse(x,y,r*2,r*2);
   }
   
-  void setR(float radius){
-    r = radius;
-  }
-   
-  float getR(){
-    return r;  
-  }
-  
   // A function that returns true or false based on
   // if the catcher intersects a raindrop
     boolean intersectDrop(Drop d) {

@@ -49,19 +49,9 @@ void draw() {
     catcher.display();
     textFont(sentenceFont);
     fill(sentenceColor);
-<<<<<<< HEAD
-<<<<<<< HEAD
     textAlign(LEFT,BASELINE);
     text("Lives: " + player.lives,10,30);
     text("Score: " + player.score,10,60);
-=======
-    text("Lives: " + player.lives,60,20);
-    text("Score: " + player.score,60,50);
->>>>>>> FETCH_HEAD
-=======
-    text("Lives: " + player.lives,60,20);
-    text("Score: " + player.score,60,50);
->>>>>>> FETCH_HEAD
     dropSpawnRate = 300;
     powerUpSpawnRate = 3000;
   }
@@ -162,41 +152,9 @@ void draw() {
   }
 }
 
-<<<<<<< HEAD
 void reset() {
   player.reset();
-  
-=======
-void mouseClicked() {
-  if (lost) {
-    if ((450<mouseX && mouseX<550) && (140<mouseY && mouseY<200)) {
-      println("Play Again Pressed");
-      lost = false;
-    }
-    if ((450<mouseX && mouseX<550) && (220<mouseY && mouseY<280)) {
-      exit();
-    }
-  }
-}
-
-void mousePressed() {
-  if (lost) {
-    if ((450<mouseX && mouseX<550) && (140<mouseY && mouseY<200)) {
-      button1Color = color(0,76,153,220);
-    }
-    if ((450<mouseX && mouseX<550) && (220<mouseY && mouseY<280)) {
-      button2Color = color(0,76,153,220);
-    }
-  }
-}
-
-void mouseReleased() {
-  if (lost) {
-    button1Color = color(0,128,255,220);
-    button2Color = color(0,128,255,220);
-  }
->>>>>>> FETCH_HEAD
-}
+}  
 
 void mouseClicked() {
   if (lost) {

@@ -129,16 +129,7 @@ void draw() {
     for (int i = 0; i < totalDrops; i++)
     {
       if (!drops[i].slowed) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         println("Drop " + i + " " + drops[i].slowed);
-=======
->>>>>>> FETCH_HEAD
-=======
->>>>>>> FETCH_HEAD
-=======
->>>>>>> FETCH_HEAD
         drops[i].speed=drops[i].speed/4.0;
         drops[i].slowed = true;
       }

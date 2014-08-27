@@ -66,7 +66,7 @@ void draw() {
   for (int i = 0; i < totalPowerUps; i++) {
     powerUps[i].move();
     powerUps[i].display();
-    powerUps[i].reachedBottom()
+    powerUps[i].reachedBottom();
     if (catcher.intersectPowerUp(powerUps[i]) && !lost) {
       powerUps[i].caught(catcher);
     }
@@ -89,16 +89,15 @@ void draw() {
     if (drops[i].reachedBottom() && !lost) {
       player.lives--;
     }
-      if (player.lives == 0) {
-        lost = true;
-        sentence = "Game over. Your final score was " + Integer.toString(player.score) + ".";
-        player.reset();
-      }
-    }
     if (catcher.intersectDrop(drops[i]) && !lost) {
       drops[i].caught();
       player.score++;
     }
+  }
+  if (player.lives == 0) {
+     lost = true;
+     sentence = "Game over. Your final score was " + Integer.toString(player.score) + ".";
+     player.reset();
   }
   
   if (lost) {

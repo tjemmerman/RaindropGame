@@ -23,7 +23,7 @@ class Timer {
   // The work of the timer is farmed out to this method.
   boolean isFinished() { 
     // Check how much time has passed
-    int passedTime = millis()- savedTime;
+    int passedTime = millis()-savedTime;
     if (passedTime > totalTime) {
       return true;
     } else {

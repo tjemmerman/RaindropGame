@@ -29,12 +29,14 @@ void setup() {
   player = new Player();
   sentenceFont = createFont("Helvetica", 30, true);
   sentenceColor = color(0,125);
-  //buttonTextFont = createFont(
   boolean lost = false;
 }
 
 void draw() {
   background(255);
+  
+  dropTimer.totalTime = dropSpawnRate;
+  powerUpTimer.totalTime = powerUpSpawnRate;
   
   if (!lost) {
     catcher.setLocation(mouseX,mouseY); 
@@ -55,26 +57,25 @@ void draw() {
       powerUps[totalPowerUps] = new PowerUp();
       totalPowerUps++;
     }
-  if (totalPowerUps >= powerUps.length) {
-     totalPowerUps = 0;
-  }      
+    if (totalPowerUps >= powerUps.length) {
+      totalPowerUps = 0;
+    }      
     powerUpTimer.start();
   }
   
   for (int i = 0; i < totalPowerUps; i++) {
     powerUps[i].move();
     powerUps[i].display();
-    powerUps[i].reachedBottom();
-   if (catcher.intersectPowerUp(powerUps[i]) && !lost) {
-     powerUps[i].caught(catcher);
-   }
+    powerUps[i].reachedBottom()
+    if (catcher.intersectPowerUp(powerUps[i]) && !lost) {
+      powerUps[i].caught(catcher);
+    }
   }
   
   if (dropTimer.isFinished()) {
 
     drops[totalDrops] = new Drop();
-
-    totalDrops ++ ;
+    totalDrops++;
 
     if (totalDrops >= drops.length) {
       totalDrops = 0;
@@ -87,6 +88,7 @@ void draw() {
     drops[i].display();
     if (drops[i].reachedBottom() && !lost) {
       player.lives--;
+    }
       if (player.lives == 0) {
         lost = true;
         sentence = "Game over. Your final score was " + Integer.toString(player.score) + ".";
@@ -107,29 +109,25 @@ void draw() {
     
     textFont(sentenceFont);
     fill(sentenceColor);
-    text(sentence,275,80); 
+    textAlign(CENTER,CENTER);
+    text(sentence,500,80); 
     
     rectMode(CENTER);
-    fill(0,128,255);
+    fill(0,128,255,220);
     rect(500,170,100,60);
-    textFont(sentenceFont,16);
-    fill(255);
-    textAlign(CENTER,CENTER);
-    text("Play\nAgain",500,170);
-    
-    fill(0,128,255);
     rect(500,250,100,60);
-    textFont(sentenceFont,20);
     fill(255);
+    textFont(sentenceFont,16);
+    text("Play\nAgain",500,170);
+    textFont(sentenceFont,20);
     text("Exit",500,250);
     
-    dropSpawnRate = 1200;
-    powerUpSpawnRate = 12000;
+    dropSpawnRate = 800;
+    powerUpSpawnRate = 8000;
     
     for (int i = 0; i < totalDrops; i++)
     {
       if (!drops[i].slowed) {
-        println("Drop " + i + " " + drops[i].slowed);
         drops[i].speed=drops[i].speed/4.0;
         drops[i].slowed = true;
       }

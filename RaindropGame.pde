@@ -37,8 +37,8 @@ void draw() {
     dropSlowRun = false;
     textFont(labelFont);
     fill(labelColor);
-    text(player.lives,10,30);
-    text(player.score,10,60);
+    text("Lives: " + player.lives,10,30);
+    text("Score: " + player.score,10,60);
   }
  
   
@@ -97,7 +97,29 @@ void draw() {
     rect(0,0,width,height);
     
     noStroke();
-    fill(0,0,0);
-    rect(470,190,60,20);
+    fill(0);
+    rect(450,140,100,60);
+    
+    fill(0);
+    rect(450,220,100,60);
+    
+    if (!dropSlowRun) {
+      println(dropSlowRun);
+      for (int i = 0; i < totalDrops; i++)
+      {
+        if (!drops[i].slowed) {
+          drops[i].speed-=.9;
+          drops[i].slowed = true;
+        }
+      }
+      for (int i = 0; i < totalPowerUps; i++)
+      {
+        if (!powerUps[i].slowed) {
+          powerUps[i].speed-=.9;
+          powerUps[i].slowed = true;
+        }
+      }
+      dropSlowRun = true;
+    }
   }
 }

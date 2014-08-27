@@ -99,10 +99,10 @@ void draw() {
     fill(160,85);
     rect(0,0,width,height);
     
-    fill(0);
+    fill(0,128,255);
     rect(450,140,100,60);
     
-    fill(0);
+    fill(0,128,255);
     rect(450,220,100,60);
     
     dropSpawnRate = 1200;

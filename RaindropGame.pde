@@ -13,6 +13,8 @@ color sentenceColor;
 boolean lost;
 String sentence;
 PFont buttonTextFont;
+color button1Color;
+color button2Color;
 
 void setup() {
   size(1000,400);
@@ -29,11 +31,15 @@ void setup() {
   player = new Player();
   sentenceFont = createFont("Helvetica", 30, true);
   sentenceColor = color(0,125);
-  boolean lost = false;
+  lost = false;
+  button1Color = color(0,128,255,220);
+  button2Color = color(0,128,255,220);
+  textAlign(CENTER,CENTER);
 }
 
 void draw() {
   background(255);
+  println(mouseX + " " + mouseY);
   
   dropTimer.totalTime = dropSpawnRate;
   powerUpTimer.totalTime = powerUpSpawnRate;
@@ -43,8 +49,19 @@ void draw() {
     catcher.display();
     textFont(sentenceFont);
     fill(sentenceColor);
+<<<<<<< HEAD
+<<<<<<< HEAD
+    textAlign(LEFT,BASELINE);
     text("Lives: " + player.lives,10,30);
     text("Score: " + player.score,10,60);
+=======
+    text("Lives: " + player.lives,60,20);
+    text("Score: " + player.score,60,50);
+>>>>>>> FETCH_HEAD
+=======
+    text("Lives: " + player.lives,60,20);
+    text("Score: " + player.score,60,50);
+>>>>>>> FETCH_HEAD
     dropSpawnRate = 300;
     powerUpSpawnRate = 3000;
   }
@@ -109,12 +126,12 @@ void draw() {
     
     textFont(sentenceFont);
     fill(sentenceColor);
-    textAlign(CENTER,CENTER);
     text(sentence,500,80); 
     
     rectMode(CENTER);
-    fill(0,128,255,220);
+    fill(button1Color);
     rect(500,170,100,60);
+    fill(button2Color);
     rect(500,250,100,60);
     fill(255);
     textFont(sentenceFont,16);
@@ -145,6 +162,68 @@ void draw() {
   }
 }
 
+<<<<<<< HEAD
 void reset() {
   player.reset();
+  
+=======
+void mouseClicked() {
+  if (lost) {
+    if ((450<mouseX && mouseX<550) && (140<mouseY && mouseY<200)) {
+      println("Play Again Pressed");
+      lost = false;
+    }
+    if ((450<mouseX && mouseX<550) && (220<mouseY && mouseY<280)) {
+      exit();
+    }
+  }
+}
+
+void mousePressed() {
+  if (lost) {
+    if ((450<mouseX && mouseX<550) && (140<mouseY && mouseY<200)) {
+      button1Color = color(0,76,153,220);
+    }
+    if ((450<mouseX && mouseX<550) && (220<mouseY && mouseY<280)) {
+      button2Color = color(0,76,153,220);
+    }
+  }
+}
+
+void mouseReleased() {
+  if (lost) {
+    button1Color = color(0,128,255,220);
+    button2Color = color(0,128,255,220);
+  }
+>>>>>>> FETCH_HEAD
+}
+
+void mouseClicked() {
+  if (lost) {
+    if ((450<mouseX && mouseX<550) && (140<mouseY && mouseY<200)) {
+      println("Play Again Pressed");
+      lost = false;
+    }
+    if ((450<mouseX && mouseX<550) && (220<mouseY && mouseY<280)) {
+      exit();
+    }
+  }
+}
+
+void mousePressed() {
+  if (lost) {
+    if ((450<mouseX && mouseX<550) && (140<mouseY && mouseY<200)) {
+      button1Color = color(0,76,153,220);
+    }
+    if ((450<mouseX && mouseX<550) && (220<mouseY && mouseY<280)) {
+      button2Color = color(0,76,153,220);
+    }
+  }
+}
+
+void mouseReleased() {
+  if (lost) {
+    button1Color = color(0,128,255,220);
+    button2Color = color(0,128,255,220);
+  }
 }

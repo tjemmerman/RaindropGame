@@ -8,9 +8,11 @@ int powerUpSpawnRate;
 PowerUp[] powerUps;
 int totalPowerUps = 0;
 Player player;
-PFont labelFont;
-color labelColor;
+PFont sentenceFont;
+color sentenceColor;
 boolean lost;
+String sentence;
+PFont buttonTextFont;
 
 void setup() {
   size(1000,400);
@@ -25,8 +27,9 @@ void setup() {
   powerUpTimer = new Timer(powerUpSpawnRate);
   powerUpTimer.start();
   player = new Player();
-  labelFont = createFont("Helvetica", 30, true);
-  labelColor = color(0,85);
+  sentenceFont = createFont("Helvetica", 30, true);
+  sentenceColor = color(0,125);
+  //buttonTextFont = createFont(
   boolean lost = false;
 }
 
@@ -36,8 +39,8 @@ void draw() {
   if (!lost) {
     catcher.setLocation(mouseX,mouseY); 
     catcher.display();
-    textFont(labelFont);
-    fill(labelColor);
+    textFont(sentenceFont);
+    fill(sentenceColor);
     text("Lives: " + player.lives,10,30);
     text("Score: " + player.score,10,60);
     dropSpawnRate = 300;
@@ -82,10 +85,12 @@ void draw() {
   for (int i = 0; i < totalDrops; i++ ) {
     drops[i].move();
     drops[i].display();
-    if (drops[i].reachedBottom()) {
+    if (drops[i].reachedBottom() && !lost) {
       player.lives--;
       if (player.lives == 0) {
         lost = true;
+        sentence = "Game over. Your final score was " + Integer.toString(player.score) + ".";
+        player.reset();
       }
     }
     if (catcher.intersectDrop(drops[i]) && !lost) {
@@ -95,15 +100,28 @@ void draw() {
   }
   
   if (lost) {
+    
     noStroke();
     fill(160,85);
-    rect(0,0,width,height);
+    rect(width/2,height/2,width,height);
+    
+    textFont(sentenceFont);
+    fill(sentenceColor);
+    text(sentence,275,80); 
+    
+    rectMode(CENTER);
+    fill(0,128,255);
+    rect(500,170,100,60);
+    textFont(sentenceFont,16);
+    fill(255);
+    textAlign(CENTER,CENTER);
+    text("Play\nAgain",500,170);
     
     fill(0,128,255);
-    rect(450,140,100,60);
-    
-    fill(0,128,255);
-    rect(450,220,100,60);
+    rect(500,250,100,60);
+    textFont(sentenceFont,20);
+    fill(255);
+    text("Exit",500,250);
     
     dropSpawnRate = 1200;
     powerUpSpawnRate = 12000;

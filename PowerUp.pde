@@ -9,6 +9,7 @@ class PowerUp {
     y = -20;    
     speed = random(1,5);  
     onScreen = true;
+    slowed = false;
   } 
     void move() {
     y += speed; 

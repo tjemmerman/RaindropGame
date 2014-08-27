@@ -19,6 +19,7 @@ class Drop {
     speed = random(1,5);   // Pick a random speed
     c = color(50,100,150); // Color
     onScreen = true;
+    slowed = false;
   }
 
   // Move the raindrop down

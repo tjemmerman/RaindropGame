@@ -9,7 +9,6 @@ Player player;
 PFont labelFont;
 color labelColor;
 boolean lost;
-boolean dropSlowRun;
 
 void setup() {
   size(1000,400);
@@ -25,7 +24,6 @@ void setup() {
   labelFont = createFont("Helvetica", 30, true);
   labelColor = color(0,85);
   boolean lost = false;
-  dropSlowRun = false;
 }
 
 void draw() {
@@ -34,7 +32,6 @@ void draw() {
   if (!lost) {
     catcher.setLocation(mouseX,mouseY); 
     catcher.display();
-    dropSlowRun = false;
     textFont(labelFont);
     fill(labelColor);
     text("Lives: " + player.lives,10,30);
@@ -103,23 +100,20 @@ void draw() {
     fill(0);
     rect(450,220,100,60);
     
-    if (!dropSlowRun) {
-      println(dropSlowRun);
-      for (int i = 0; i < totalDrops; i++)
-      {
-        if (!drops[i].slowed) {
-          drops[i].speed-=.9;
-          drops[i].slowed = true;
-        }
+    for (int i = 0; i < totalDrops; i++)
+    {
+      if (!drops[i].slowed) {
+        println("Drop " + i + " " + drops[i].slowed);
+        drops[i].speed=drops[i].speed/2.0;
+        drops[i].slowed = true;
       }
-      for (int i = 0; i < totalPowerUps; i++)
-      {
-        if (!powerUps[i].slowed) {
-          powerUps[i].speed-=.9;
-          powerUps[i].slowed = true;
-        }
+    }
+    for (int i = 0; i < totalPowerUps; i++)
+    {
+      if (!powerUps[i].slowed) {
+        powerUps[i].speed=powerUps[i].speed/2.0;
+        powerUps[i].slowed = true;
       }
-      dropSlowRun = true;
     }
   }
 }

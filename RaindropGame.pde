@@ -8,6 +8,8 @@ int totalPowerUps = 0;
 Player player;
 PFont labelFont;
 color labelColor;
+boolean lost;
+boolean dropSlowRun;
 
 void setup() {
   size(1000,400);
@@ -22,19 +24,23 @@ void setup() {
   player = new Player();
   labelFont = createFont("Helvetica", 30, true);
   labelColor = color(0,85);
+  boolean lost = false;
+  dropSlowRun = false;
 }
 
 void draw() {
   background(255);
-
-  catcher.setLocation(mouseX,mouseY); 
-
-  catcher.display(); 
   
-  textFont(labelFont);
-  fill(labelColor);
-  text(player.lives,10,30);
-  text(player.score,10,60);
+  if (!lost) {
+    catcher.setLocation(mouseX,mouseY); 
+    catcher.display();
+    dropSlowRun = false;
+    textFont(labelFont);
+    fill(labelColor);
+    text(player.lives,10,30);
+    text(player.score,10,60);
+  }
+ 
   
     if (powerUpTimer.isFinished()) 
   {
@@ -53,7 +59,7 @@ void draw() {
     powerUps[i].move();
     powerUps[i].display();
     powerUps[i].reachedBottom();
-   if (catcher.intersectPowerUp(powerUps[i])) {
+   if (catcher.intersectPowerUp(powerUps[i]) && !lost) {
      powerUps[i].caught(catcher);
    }
   }
@@ -75,10 +81,23 @@ void draw() {
     drops[i].display();
     if (drops[i].reachedBottom()) {
       player.lives--;
+      if (player.lives == 0) {
+        lost = true;
+      }
     }
-    if (catcher.intersectDrop(drops[i])) {
+    if (catcher.intersectDrop(drops[i]) && !lost) {
       drops[i].caught();
       player.score++;
     }
+  }
+  
+  if (lost) {
+    noStroke();
+    fill(160,85);
+    rect(0,0,width,height);
+    
+    noStroke();
+    fill(0,0,0);
+    rect(470,190,60,20);
   }
 }

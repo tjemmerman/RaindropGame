@@ -94,6 +94,7 @@ void draw() {
       player.score++;
     }
   }
+  println(player.lives);
   if (player.lives == 0) {
      lost = true;
      sentence = "Game over. Your final score was " + Integer.toString(player.score) + ".";
@@ -138,5 +139,12 @@ void draw() {
         powerUps[i].slowed = true;
       }
     }
+    
+    
+    
   }
+}
+
+void reset() {
+  player.reset();
 }

@@ -1,7 +1,6 @@
 Catcher catcher;    
 Timer dropTimer;
 int dropSpawnRate;
->>>>>>> FETCH_HEAD
 Drop[] drops;      
 int totalDrops = 0; 
 Timer powerUpTimer;
@@ -132,7 +131,10 @@ void draw() {
       if (!drops[i].slowed) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         println("Drop " + i + " " + drops[i].slowed);
+=======
+>>>>>>> FETCH_HEAD
 =======
 >>>>>>> FETCH_HEAD
 =======

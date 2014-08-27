@@ -2,12 +2,14 @@ class PowerUp {
   float x,y;  // coordinates
   float speed;  // the speed that the PowerUp falls at
   boolean onScreen;  // true if PowerUp is on screen
+  boolean slowed;
   
   PowerUp() {
     x = random(width);
     y = -20;    
     speed = random(1,5);  
     onScreen = true;
+    slowed = false;
   } 
     void move() {
     y += speed; 

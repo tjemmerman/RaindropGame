@@ -10,6 +10,7 @@ class Drop {
   color c;
   float r;     // Radius of raindrop
   boolean onScreen;
+  boolean slowed;
 
   Drop() {
     r = 18;                 // All raindrops are the same size
@@ -18,6 +19,7 @@ class Drop {
     speed = random(1,5);   // Pick a random speed
     c = color(50,100,150); // Color
     onScreen = true;
+    slowed = false;
   }
 
   // Move the raindrop down

@@ -1,31 +1,33 @@
 Catcher catcher;    
 Timer dropTimer;
+int dropSpawnRate;
 Drop[] drops;      
 int totalDrops = 0; 
 Timer powerUpTimer;
+int powerUpSpawnRate;
 PowerUp[] powerUps;
 int totalPowerUps = 0;
 Player player;
 PFont labelFont;
 color labelColor;
 boolean lost;
-boolean dropSlowRun;
 
 void setup() {
   size(1000,400);
   smooth();
   catcher = new Catcher(32); 
   drops = new Drop[1000];
-  dropTimer = new Timer(300);   
+  dropSpawnRate = 300;
+  dropTimer = new Timer(dropSpawnRate);   
   dropTimer.start();  
   powerUps = new PowerUp[1000]; 
-  powerUpTimer = new Timer(3000);
+  powerUpSpawnRate = 3000;
+  powerUpTimer = new Timer(powerUpSpawnRate);
   powerUpTimer.start();
   player = new Player();
   labelFont = createFont("Helvetica", 30, true);
   labelColor = color(0,85);
   boolean lost = false;
-  dropSlowRun = false;
 }
 
 void draw() {
@@ -34,11 +36,12 @@ void draw() {
   if (!lost) {
     catcher.setLocation(mouseX,mouseY); 
     catcher.display();
-    dropSlowRun = false;
     textFont(labelFont);
     fill(labelColor);
-    text(player.lives,10,30);
-    text(player.score,10,60);
+    text("Lives: " + player.lives,10,30);
+    text("Score: " + player.score,10,60);
+    dropSpawnRate = 300;
+    powerUpSpawnRate = 3000;
   }
  
   
@@ -96,12 +99,28 @@ void draw() {
     fill(160,85);
     rect(0,0,width,height);
     
-    noStroke();
     fill(0);
     rect(450,140,100,60);
     
-    noStroke();
     fill(0);
     rect(450,220,100,60);
+    
+    dropSpawnRate = 1200;
+    powerUpSpawnRate = 12000;
+    
+    for (int i = 0; i < totalDrops; i++)
+    {
+      if (!drops[i].slowed) {
+        drops[i].speed=drops[i].speed/4.0;
+        drops[i].slowed = true;
+      }
+    }
+    for (int i = 0; i < totalPowerUps; i++)
+    {
+      if (!powerUps[i].slowed) {
+        powerUps[i].speed=powerUps[i].speed/4.0;
+        powerUps[i].slowed = true;
+      }
+    }
   }
 }

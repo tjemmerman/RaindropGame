@@ -97,7 +97,11 @@ void draw() {
     rect(0,0,width,height);
     
     noStroke();
-    fill(0,0,0);
-    rect(470,190,60,20);
+    fill(0);
+    rect(450,140,100,60);
+    
+    noStroke();
+    fill(0);
+    rect(450,220,100,60);
   }
 }

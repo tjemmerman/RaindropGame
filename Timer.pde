@@ -8,15 +8,22 @@ class Timer {
  
   int savedTime; // When Timer started
   int totalTime; // How long Timer should last
+  boolean stopped;
   
   Timer(int tempTotalTime) {
     totalTime = tempTotalTime;
+    stopped = false;
   }
   
   // Starting the timer
   void start() {
     // When the timer starts it stores the current time in milliseconds.
-    savedTime = millis(); 
+    savedTime = millis();
+    stopped = false;
+  }
+  
+  void stop() {
+    stopped = true;
   }
   
   // The function isFinished() returns true if 5,000 ms have passed. 
@@ -24,7 +31,7 @@ class Timer {
   boolean isFinished() { 
     // Check how much time has passed
     int passedTime = millis()-savedTime;
-    if (passedTime > totalTime) {
+    if (passedTime > totalTime || stopped) {
       return true;
     } else {
       return false;

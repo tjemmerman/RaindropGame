@@ -15,8 +15,10 @@ String sentence;
 PFont buttonTextFont;
 color button1Color;
 color button2Color;
+Timer delayTimer;
 
 void setup() {
+  println(millis()-delayTimer.savedTime);
   size(1000,400);
   smooth();
   catcher = new Catcher(32); 
@@ -34,13 +36,12 @@ void setup() {
   lost = false;
   button1Color = color(0,128,255,220);
   button2Color = color(0,128,255,220);
-  textAlign(CENTER,CENTER);
+  delayTimer = new Timer(5000);
+  delayTimer.start();
 }
 
 void draw() {
   background(255);
-  println(mouseX + " " + mouseY);
-  
   dropTimer.totalTime = dropSpawnRate;
   powerUpTimer.totalTime = powerUpSpawnRate;
   
@@ -59,14 +60,17 @@ void draw() {
   
     if (powerUpTimer.isFinished()) 
   {
-    if (int(random(3)) == 0)
-    {
-      powerUps[totalPowerUps] = new PowerUp();
-      totalPowerUps++;
+    if (delayTimer.isFinished()) {
+      if (int(random(3)) == 0)
+      {
+        powerUps[totalPowerUps] = new PowerUp();
+        totalPowerUps++;
+      }
+      if (totalPowerUps >= powerUps.length) {
+        totalPowerUps = 0;
+      }      
+      delayTimer.stop();
     }
-    if (totalPowerUps >= powerUps.length) {
-      totalPowerUps = 0;
-    }      
     powerUpTimer.start();
   }
   
@@ -80,9 +84,11 @@ void draw() {
   }
   
   if (dropTimer.isFinished()) {
-
-    drops[totalDrops] = new Drop();
-    totalDrops++;
+    if (delayTimer.isFinished()) {
+      drops[totalDrops] = new Drop();
+      totalDrops++;
+      delayTimer.stop();
+    }
 
     if (totalDrops >= drops.length) {
       totalDrops = 0;
@@ -101,7 +107,7 @@ void draw() {
       player.score++;
     }
   }
-  println(player.lives);
+
   if (player.lives == 0) {
      lost = true;
      sentence = "Game over. Your final score was " + Integer.toString(player.score) + ".";
@@ -113,7 +119,7 @@ void draw() {
     noStroke();
     fill(160,85);
     rect(width/2,height/2,width,height);
-    
+    textAlign(CENTER,CENTER);
     textFont(sentenceFont);
     fill(sentenceColor);
     text(sentence,500,80); 
@@ -146,9 +152,6 @@ void draw() {
         powerUps[i].slowed = true;
       }
     }
-    
-    
-    
   }
 }
 
@@ -159,7 +162,6 @@ void reset() {
 void mouseClicked() {
   if (lost) {
     if ((450<mouseX && mouseX<550) && (140<mouseY && mouseY<200)) {
-      println("Play Again Pressed");
       lost = false;
     }
     if ((450<mouseX && mouseX<550) && (220<mouseY && mouseY<280)) {

@@ -17,9 +17,10 @@ color button1Color;
 color button2Color;
 Timer delayTimer;
 String firstChar;
+int level;
 
 void setup() {
-  size(1000,400);
+  size(1000,600);
   smooth();
   catcher = new Catcher(32); 
   drops = new Drop[1000];
@@ -38,6 +39,7 @@ void setup() {
   button2Color = color(0,128,255,220);
   delayTimer = new Timer(5000);
   delayTimer.start();
+  level = 1;
 }
 
 void draw() {
@@ -53,7 +55,7 @@ void draw() {
     else {
       firstChar = "0.";
     }
-    text(firstChar+delayTimeLeft.substring(1),width/2,height/2);
+    text("Level " + level + " starting in\n" + firstChar+delayTimeLeft.substring(1),width/2,height/2);
   }
   dropTimer.totalTime = dropSpawnRate;
   powerUpTimer.totalTime = powerUpSpawnRate;
@@ -70,9 +72,17 @@ void draw() {
     powerUpSpawnRate = 3000;
   }
  
+  if (level == 2) {
+    for (int i = 0; i < totalDrops; i++) {
+      if (!drops[i].accelerated) {
+        drops[i].speed = drops[i].speed*2;
+        drops[i].accelerated = true;
+      }
+    }
+  }
   
-    if (powerUpTimer.isFinished()) 
-  {
+  
+  if (powerUpTimer.isFinished()) {
     if (delayTimer.isFinished()) {
       if (int(random(3)) == 0)
       {
@@ -119,12 +129,16 @@ void draw() {
       drops[i].caught();
       player.score++;
     }
-  }
-
-  if (player.lives == 0) {
-     lost = true;
-     sentence = "Game over. Your final score was " + Integer.toString(player.score) + ".";
-     player.reset();
+    if (player.lives <= 0) {
+      lost = true;
+      sentence = "Game over. Your final score was " + Integer.toString(player.score) + ".";
+      player.reset();
+      level = 1;
+    }
+    if (player.score >= 100 && level == 1) {
+      level = 2;
+      reset();
+    } 
   }
   
   if (lost) {
@@ -154,14 +168,14 @@ void draw() {
     for (int i = 0; i < totalDrops; i++)
     {
       if (!drops[i].slowed) {
-        drops[i].speed=drops[i].speed/4.0;
+        drops[i].speed=drops[i].speed/(4.0*level);
         drops[i].slowed = true;
       }
     }
     for (int i = 0; i < totalPowerUps; i++)
     {
       if (!powerUps[i].slowed) {
-        powerUps[i].speed=powerUps[i].speed/4.0;
+        powerUps[i].speed=powerUps[i].speed/(4.0*level);
         powerUps[i].slowed = true;
       }
     }
@@ -170,12 +184,21 @@ void draw() {
 
 void reset() {
   player.reset();
+  for (int i = 0; i < totalDrops; i++) {
+    drops[i].caught();
+  }
+  for (int i = 0; i < totalPowerUps; i++) {
+    powerUps[i].caught(catcher);
+  }
+  catcher.r = 32;
+  delayTimer.start();
 }  
 
 void mouseClicked() {
   if (lost) {
     if ((450<mouseX && mouseX<550) && (140<mouseY && mouseY<200)) {
       lost = false;
+      reset();
     }
     if ((450<mouseX && mouseX<550) && (220<mouseY && mouseY<280)) {
       exit();

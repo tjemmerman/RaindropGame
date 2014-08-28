@@ -3,6 +3,7 @@ class PowerUp {
   float speed;  // the speed that the PowerUp falls at
   boolean onScreen;  // true if PowerUp is on screen
   boolean slowed;
+  boolean accelerated;
   
   PowerUp() {
     x = random(width);
@@ -10,6 +11,7 @@ class PowerUp {
     speed = random(1,5);  
     onScreen = true;
     slowed = false;
+    accelerated = false;
   } 
     void move() {
     y += speed; 

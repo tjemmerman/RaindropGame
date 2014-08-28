@@ -16,9 +16,9 @@ PFont buttonTextFont;
 color button1Color;
 color button2Color;
 Timer delayTimer;
+String firstChar;
 
 void setup() {
-  println(millis()-delayTimer.savedTime);
   size(1000,400);
   smooth();
   catcher = new Catcher(32); 
@@ -42,6 +42,19 @@ void setup() {
 
 void draw() {
   background(255);
+  if (!delayTimer.isFinished()) {
+    textFont(sentenceFont);
+    fill(0);
+    textAlign(CENTER,CENTER);
+    String delayTimeLeft = Integer.toString(5000-(millis()-delayTimer.savedTime));
+    if (delayTimeLeft.length() == 4) {
+      firstChar = delayTimeLeft.substring(0,1) + ".";
+    }
+    else {
+      firstChar = "0.";
+    }
+    text(firstChar+delayTimeLeft.substring(1),width/2,height/2);
+  }
   dropTimer.totalTime = dropSpawnRate;
   powerUpTimer.totalTime = powerUpSpawnRate;
   
